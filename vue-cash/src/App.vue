@@ -1,12 +1,17 @@
 <template>
   <div class="container">
     <Header @toggle-add-task="toggleAddTask" title="Task Tracker" :showAddTask="showAddTask"
-     />
 
+     />
     <div v-show="showAddTask">
       <AddTask @add-task="addTask"  />
     </div>
-    <Tasks @toggle-reminder="toggleReminder" @delete-task="deleteTask" :tasks="tasks"/>
+    <!-- <Task @toggle-reminder="toggleReminder" @delete-task="deleteTask" :tasks="tasks"/> -->
+    <div v-show="showEditTask">
+      <EditTask @edit-task="EditTask"  />
+    </div>
+  <Tasks @toggle-reminder="toggleReminder" @delete-task="deleteTask" :tasks="tasks"/>
+
   </div>
   <router-view/>
 </template>
@@ -14,6 +19,8 @@
   import  Header  from './components/Header'
   import  Tasks  from './components/Tasks'
   import  AddTask  from './components/AddTask'
+  import  EditTask  from './components/EditTask'
+  import  Task from './components/Task.vue'
 
 
   export default {
@@ -21,23 +28,35 @@
     components: {
     Header,
     Tasks,
-    AddTask
-
+    AddTask,
+    EditTask,
+    Task
 },
     data() {
       return {
         tasks: [],
-        showAddTask: false
+        showAddTask: false,
+      }
+    },
+      data() {
+      return {
+        tasks: [],
+        showEditTask: false
       }
     },
     methods :{
+      toggleEditTask(){
+        this.showEditTask = !this.showEditTask
+      },
+      EditTask(task){
+        this.tasks =[...this.tasks,task]
+      },
       toggleAddTask(){
         this.showAddTask = !this.showAddTask
       },
       addTask(task){
         this.tasks =[...this.tasks,task]
       },
-
       deleteTask(id){
         if(confirm ('Are you delete ?')){
           this.tasks= this.tasks.filter((task) =>task.id !==id)

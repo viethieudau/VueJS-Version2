@@ -4,16 +4,26 @@
         <i @click="$emit('delete-task',task.id)" class="fas fa-times"></i>
         </h3>
         <p>{{task.day}}</p>
+         <Button
+         @btn-click="$emit('toggle-edit-task')"
+         :text="showEditTask ? 'Close' : 'Edit'"
+         :color="showEditTask ? 'red': 'blue'"
+         />
     </div>
+
  </template>
  <script>
-
+import Button from './Button.vue'
 export default {
     name : 'Task',
     props:{
-        task: Object,
-    },
+      task: Object,
+      showEditTask:Boolean
 
+    },
+   components: {
+        Button
+    }
 
  }
  </script>
@@ -36,4 +46,5 @@ export default {
     align-items: center;
     justify-content: space-between;
  }
+
  </style>

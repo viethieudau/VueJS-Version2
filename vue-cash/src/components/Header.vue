@@ -15,7 +15,7 @@ import Button from './Button.vue'
         name: 'Header',
         props: {
             title:String,
-            showAddTask:Boolean
+             showAddTask:Boolean
         },
     components: {
         Button
